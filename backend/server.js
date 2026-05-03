@@ -6,8 +6,21 @@ const connectDB = require('./config/db');
 const app = express();
 
 connectDB();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://piyush781.github.io"
+];
 
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/auth'));
