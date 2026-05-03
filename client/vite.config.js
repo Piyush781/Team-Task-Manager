@@ -9,6 +9,7 @@ export default defineConfig({
     tailwindcss(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  base: '/Team-Task-Manager/',
   server: {
     proxy: {
       '/api': {
